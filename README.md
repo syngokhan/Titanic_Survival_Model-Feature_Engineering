@@ -7,10 +7,11 @@
 # Dataset Story
 **The data set contains information about the people involved in the Titanic shipwreck.**
 
-**This dataset with a competition for entry level on Kaggle;
-It consists of 768 observations and 12 variables.**
+**This dataset with a competition for entry level on Kaggle;**
+**It consists of 768 observations and 12 variables.**
 
 **The target variable is specified as "Survived";**
+
 **Survival of 1 person,**
 **0 indicates the death of the person.*
 
