@@ -14,7 +14,7 @@
 
 **Survival of 1 person,**
 
-**0 indicates the death of the person.*
+**0 indicates the death of the person.**
 
 # Variables
 
