@@ -13,12 +13,14 @@
 **The target variable is specified as "Survived";**
 
 **Survival of 1 person,**
+
 **0 indicates the death of the person.*
 
 # Variables
 
 **Survived – Survival**
-**--1 Survived, 0 Failed**
+**--1 Survived,**
+**--0 Failed**
 
 **Pclass – Ticket Class**
 **--1 = Grade 1, 2 = Grade 2, 3 = Grade 3**
