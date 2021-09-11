@@ -35,7 +35,7 @@ def check_df(dataframe,num = 5):
     print(f"{dataframe.ndim} Dimension", end = "\n\n")
     
     print(" quantiles ".upper().center(50,"#"), end = "\n\n")
-    print(dataframe.quantile([0, 0.01 ,0.05 ,  0.50, 0.95, 0.99, 1]).T , end = "\n\n")
+    print(dataframe.describe([0, 0.01 ,0.05 ,  0.50, 0.95, 0.99, 1]).T , end = "\n\n")
 
 
 # In[3]:
@@ -122,6 +122,7 @@ def grab_col_names(dataframe , cat_th = 10 , car_th = 20 ,details = False):
     cat_but_car = [col for col in dataframe.columns if dataframe[col].dtype == "object" and                    (dataframe[col].nunique() > car_th)]
     
     cat_cols = cat_cols + num_but_cat
+    cat_cols = [col for col in cat_cols if col not in cat_but_car]
     
     # Num_Cols
     
