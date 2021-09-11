@@ -36,17 +36,14 @@ pd.set_option("display.float_format" , lambda x : "%.3f" % x)
 # In[4]:
 
 
-def titanic():
-    
-    dataframe = pd.read_csv("/Users/gokhanersoz/Desktop/VBO_Dataset/titanic.csv")
-    
-    return dataframe                        
+path = "/Users/gokhanersoz/Desktop/VBO_Dataset/titanic.csv"
+titanic = pd.read_csv(path)
 
 
 # In[5]:
 
 
-df = titanic()
+df = titanic.copy()
 
 
 # In[6]:
@@ -164,13 +161,13 @@ rare_analyser(df , "Survived", cat_cols)
 # In[21]:
 
 
-def titanic():
-    
-    dataframe = pd.read_csv("/Users/gokhanersoz/Desktop/VBO_Dataset/titanic.csv")
-    
-    return dataframe                        
+print("Cat But Car : ", cat_but_car)
+print("Num Cols : ", num_cols)
+print("Cat Cols : ", cat_cols)
 
-df = titanic()
+
+# In[22]:
+
 
 def titanic_data_prep(dataframe):
     
@@ -330,37 +327,37 @@ def titanic_data_prep(dataframe):
     return dataframe ,scaler
 
 
-# In[22]:
+# In[23]:
 
 
 titanic, scaler = titanic_data_prep(df)
 
 
-# In[23]:
+# In[24]:
 
 
 titanic.head()
 
 
-# In[24]:
+# In[25]:
 
 
 import pickle
 
-pd.to_pickle(titanic, open("titanic_prep.pkl", "wb"))
-pd.to_pickle(scaler, open("scaler_titanic.pkl", "wb"))
+pd.to_pickle(titanic, open("Titanic_Prep.pkl", "wb"))
+pd.to_pickle(scaler, open("Scaler_Titanic.pkl", "wb"))
 
 
 # ## Model
 
-# In[25]:
+# In[26]:
 
 
 from sklearn.linear_model import LogisticRegression
 from sklearn.model_selection import cross_validate,GridSearchCV
 
 
-# In[26]:
+# In[27]:
 
 
 X = titanic.drop("SURVIVED",axis = 1)
@@ -372,7 +369,7 @@ print("Y DataFrame Shape : {}".format(y.shape))
 
 # # Success Evaluation (Validation) with Holdout Method
 
-# In[27]:
+# In[28]:
 
 
 from sklearn.metrics import r2_score,recall_score,precision_score,f1_score,accuracy_score,roc_auc_score,                            classification_report,confusion_matrix,roc_curve
@@ -446,7 +443,7 @@ def score_test(model , X , y,roc_auc_plot = True, matrix = True):
         plt.show()
 
 
-# In[28]:
+# In[29]:
 
 
 score_test(LogisticRegression(),X,y)
@@ -454,7 +451,7 @@ score_test(LogisticRegression(),X,y)
 
 # ## Success Evaluation with CV and Hyperparameter Optimization with GridSearchCV
 
-# In[29]:
+# In[30]:
 
 
 logistic_param_grid =    {'penalty' : ['l1', 'l2', 'elasticnet', 'none'],
@@ -466,7 +463,7 @@ logistic_param_grid =    {'penalty' : ['l1', 'l2', 'elasticnet', 'none'],
 models = [ ("LR" , LogisticRegression(), logistic_param_grid)]
 
 
-# In[30]:
+# In[31]:
 
 
 def base_model_regressor(X , y , models ,cv = 5):
@@ -495,13 +492,13 @@ def base_model_regressor(X , y , models ,cv = 5):
      
 
 
-# In[31]:
+# In[32]:
 
 
 base_model_regressor(X ,y, models, cv = 5)
 
 
-# In[32]:
+# In[33]:
 
 
 def hyperparameter_optimization(X , y , models, cv = 3):
@@ -554,7 +551,7 @@ def hyperparameter_optimization(X , y , models, cv = 3):
         
 
 
-# In[33]:
+# In[34]:
 
 
 from warnings import filterwarnings
@@ -563,30 +560,30 @@ filterwarnings("ignore")
 model_dict = hyperparameter_optimization(X, y , models, cv = 10)
 
 
-# In[34]:
+# In[35]:
 
 
 for name,regressor,params in models:
     
     model_dict[name].fit(X,y)
-    pd.to_pickle(model_dict[name], open(name+"_model.pkl","wb"))
+    pd.to_pickle(model_dict[name], open("Final_"+name+"_Model.pkl","wb"))
 
 
 # ## Final Model
 
-# In[35]:
-
-
-titanic_model = pickle.load(open("LR_model.pkl","rb"))
-
-
 # In[36]:
+
+
+titanic_model = pickle.load(open("Final_LR_Model.pkl","rb"))
+
+
+# In[37]:
 
 
 titanic_model.get_params()
 
 
-# In[37]:
+# In[38]:
 
 
 def roc_auc_plot(model, X, y):
@@ -624,13 +621,13 @@ def confusion_matrix_heat(model, X ,y):
     
 
 
-# In[38]:
+# In[39]:
 
 
 confusion_matrix_heat(titanic_model, X, y)
 
 
-# In[39]:
+# In[40]:
 
 
 roc_auc_plot(titanic_model, X, y)
